@@ -67,6 +67,19 @@ has "formulario de contacto"      'id="contact-form"' -F
 has "select con aria-label"       'id="subject" name="subject" required aria-label=' -F
 lacks "sin favicon mal tipado"    'type="image/png" href="assets/logo.jpg"' -F
 
+# El formulario entrega de verdad (mailto), no una simulación
+JS="$ROOT/script.js"
+if grep -q 'mailto:' "$JS" && grep -Fq 'info@emcabogados.es' "$JS"; then
+  pass "formulario envía por mailto a info@emcabogados.es"
+else
+  fail "el formulario no está conectado (¿envío real?)"
+fi
+if grep -Fq 'Simulate form submission' "$JS"; then
+  fail "queda la simulación del formulario en script.js"
+else
+  pass "sin simulación de envío en script.js"
+fi
+
 # Placeholders olvidados (lorem/ipsum sin distinguir mayúsculas; TODO/FIXME/etc. literales)
 if grep -qiE 'lorem|ipsum' "$HTML" || grep -qE 'TODO|FIXME|XXXXX|CHANGEME|PLACEHOLDER' "$HTML"; then
   fail "hay texto placeholder olvidado (lorem/ipsum/TODO/FIXME…)"

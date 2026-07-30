@@ -97,31 +97,45 @@ function observeSections() {
 }
 
 // Contact form handling
+// Correo de destino de las consultas del formulario
+const OFFICE_EMAIL = 'info@emcabogados.es';
+
 function handleContactForm(e) {
     e.preventDefault();
-    
+
     // Get form data
     const formData = new FormData(contactForm);
     const formValues = Object.fromEntries(formData);
-    
+
     // Basic validation
     if (!validateForm(formValues)) {
         return;
     }
-    
-    // Show loading state
-    const submitButton = contactForm.querySelector('button[type="submit"]');
-    const originalText = submitButton.textContent;
-    submitButton.textContent = 'Enviando...';
-    submitButton.disabled = true;
-    
-    // Simulate form submission (replace with actual form handling)
-    setTimeout(() => {
-        showSuccessMessage();
-        contactForm.reset();
-        submitButton.textContent = originalText;
-        submitButton.disabled = false;
-    }, 2000);
+
+    const { name, email, phone, message } = formValues;
+
+    // Texto legible del área jurídica (la opción seleccionada, no su value)
+    const subjectSelect = contactForm.querySelector('#subject');
+    const area = subjectSelect.options[subjectSelect.selectedIndex].text;
+
+    // Construye el correo con la consulta prerrellenada
+    const mailSubject = `Consulta web — ${area}`;
+    const mailBody =
+        `Nombre: ${name}\n` +
+        `Email: ${email}\n` +
+        `Teléfono: ${phone ? phone : '(no indicado)'}\n` +
+        `Área jurídica: ${area}\n\n` +
+        `Consulta:\n${message}\n`;
+    const mailtoUrl =
+        `mailto:${OFFICE_EMAIL}` +
+        `?subject=${encodeURIComponent(mailSubject)}` +
+        `&body=${encodeURIComponent(mailBody)}`;
+
+    // Abre el cliente de correo del visitante
+    window.location.href = mailtoUrl;
+
+    showSuccessMessage();
+    contactForm.reset();
 }
 
 // Form validation
@@ -159,7 +173,7 @@ function isValidEmail(email) {
 
 // Show success message
 function showSuccessMessage() {
-    showMessage('¡Consulta enviada exitosamente! Nos pondremos en contacto contigo pronto.', 'success');
+    showMessage('Hemos abierto tu programa de correo con la consulta lista para enviar. Si no se abre, escríbenos a info@emcabogados.es.', 'success');
 }
 
 // Show error message

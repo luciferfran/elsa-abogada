@@ -39,6 +39,19 @@ npx serve
 Luego abre http://localhost:8000 en el navegador.
 También puedes abrir `index.html` directamente, aunque un servidor local reproduce mejor el comportamiento real.
 
+## Smoke test
+
+Antes de publicar puedes ejecutar el smoke test (bash, sin dependencias), que
+comprueba que el sitio se sirve, que el contenido clave está presente, que no hay
+referencias ni anclas rotas y que no quedan textos placeholder:
+
+```bash
+./smoke-test.sh
+```
+
+Se ejecuta automáticamente en cada *push* y *pull request* a `main` mediante
+GitHub Actions (`.github/workflows/smoke.yml`).
+
 ## Despliegue
 
 La rama `main` es la de producción: al hacer *push* a `main`, los cambios se publican en https://emcabogados.es.

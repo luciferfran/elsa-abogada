@@ -25,6 +25,7 @@ No hay `package.json`, framework, ni paso de compilación.
 
 - **Editar directamente** los ficheros HTML/CSS/JS. No inventes un sistema de build.
 - Para previsualizar en local basta con abrir `index.html` en el navegador (o servir la carpeta con cualquier servidor estático).
+- **Tras cualquier cambio, ejecuta `./smoke-test.sh`** antes de hacer commit: valida contenido clave, referencias/anclas y ausencia de placeholders. También corre en CI (`.github/workflows/smoke.yml`) en cada push/PR a `main`.
 - Mantén el HTML **accesible**: usa `aria-label`, `alt` en imágenes y estructura semántica (ya se usa a lo largo del sitio).
 - Conserva el estilo y la nomenclatura de clases CSS existentes (BEM-ish: `hero-title`, `nav-logo`, `btn btn-primary`, etc.).
 - Los textos de cara al público van en español y con tono profesional.

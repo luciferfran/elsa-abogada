@@ -11,7 +11,7 @@
     --secondary-color: #34495e;
     --accent-color: #c9b037;
     --text-primary: #2c3e50;
-    --text-secondary: #7f8c8d;
+    --text-secondary: #5f6d6f;
     --text-light: #ecf0f1;
     --background-light: #f8f9fa;
     --background-white: #ffffff;
@@ -259,8 +259,9 @@ p {
     margin-bottom: 1rem;
 }
 
-.hero-card h3 {
+.hero-card h2 {
     color: var(--primary-color);
+    font-size: 2rem;
     margin-bottom: 1rem;
 }
 
@@ -337,8 +338,9 @@ p {
     flex-shrink: 0;
 }
 
-.feature h4 {
+.feature h3 {
     color: var(--primary-color);
+    font-size: 1.5rem;
     margin-bottom: 0.5rem;
 }
 
@@ -460,12 +462,13 @@ p {
 }
 
 .contact-details a {
-    color: var(--accent-color);
+    color: var(--secondary-color);
     text-decoration: none;
     font-weight: 500;
 }
 
 .contact-details a:hover {
+    color: var(--accent-color);
     text-decoration: underline;
 }
 

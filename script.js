@@ -339,6 +339,25 @@ function initKeyboardNavigation() {
     });
 }
 
+// Mapa de ubicación bajo demanda
+// El iframe de Google Maps supone ~455 KiB de terceros en cada visita, así que
+// sólo se inserta cuando la persona pulsa el marcador de posición.
+function initMapFacade() {
+    const facade = document.getElementById('map-facade');
+    const container = document.getElementById('map-container');
+    if (!facade || !container) return;
+
+    facade.addEventListener('click', () => {
+        const iframe = document.createElement('iframe');
+        iframe.title = 'Ubicación despacho Elsa Manzano Cubero';
+        iframe.src = container.dataset.mapSrc;
+        iframe.allowFullscreen = true;
+        iframe.referrerPolicy = 'no-referrer-when-downgrade';
+        container.replaceChild(iframe, facade);
+        iframe.focus();
+    });
+}
+
 // Initialize WhatsApp link (optional)
 function initWhatsAppLink() {
     const phoneNumber = '663389819';
@@ -400,6 +419,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initClickToCall();
     addScrollToTop();
     initKeyboardNavigation();
+    initMapFacade();
     initWhatsAppLink();
     
     // Close mobile menu when clicking outside

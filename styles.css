@@ -1,3 +1,50 @@
+/* Fuentes auto-alojadas
+   Antes se cargaban desde Google Fonts, lo que encadenaba dos saltos de red
+   bloqueantes (CSS remoto -> woff2). Sirviéndolas desde el propio dominio la
+   cadena crítica desaparece. Son fuentes variables: un fichero por subconjunto
+   cubre todos los grosores. unicode-range hace que latin-ext sólo se descargue
+   si el texto lo necesita. */
+
+/* Playfair Display — latin */
+@font-face {
+    font-family: 'Playfair Display';
+    font-style: normal;
+    font-weight: 400 700;
+    font-display: swap;
+    src: url('assets/fonts/playfair-latin.woff2') format('woff2');
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* Playfair Display — latin-ext */
+@font-face {
+    font-family: 'Playfair Display';
+    font-style: normal;
+    font-weight: 400 700;
+    font-display: swap;
+    src: url('assets/fonts/playfair-latin-ext.woff2') format('woff2');
+    unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+/* Inter — latin */
+@font-face {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 300 600;
+    font-display: swap;
+    src: url('assets/fonts/inter-latin.woff2') format('woff2');
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* Inter — latin-ext */
+@font-face {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 300 600;
+    font-display: swap;
+    src: url('assets/fonts/inter-latin-ext.woff2') format('woff2');
+    unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
 /* CSS Reset and Base Styles */
 * {
     margin: 0;
@@ -10,6 +57,9 @@
     --primary-color: #2c3e50;
     --secondary-color: #34495e;
     --accent-color: #c9b037;
+    /* Variante oscurecida del dorado para texto: cumple WCAG AA (4.5:1) sobre
+       fondos claros. --accent-color se reserva para bordes, fondos y adornos. */
+    --accent-text: #7d6d22;
     --text-primary: #2c3e50;
     --text-secondary: #5f6d6f;
     --text-light: #ecf0f1;
@@ -166,7 +216,7 @@ p {
 
 .nav-link:hover,
 .nav-link.active {
-    color: var(--accent-color);
+    color: var(--accent-text);
 }
 
 .nav-link::after {
@@ -223,7 +273,7 @@ p {
 
 .hero-subtitle {
     font-size: 1.5rem;
-    color: var(--accent-color);
+    color: var(--accent-text);
     margin-bottom: 1.5rem;
     font-style: italic;
 }
@@ -407,7 +457,7 @@ p {
     content: '✓';
     position: absolute;
     left: 0;
-    color: var(--accent-color);
+    color: var(--accent-text);
     font-weight: bold;
 }
 
@@ -468,7 +518,7 @@ p {
 }
 
 .contact-details a:hover {
-    color: var(--accent-color);
+    color: var(--accent-text);
     text-decoration: underline;
 }
 
@@ -724,4 +774,61 @@ p {
     * {
         box-shadow: none !important;
     }
+}
+/* Mapa de ubicación bajo demanda
+   El iframe de Google Maps arrastra ~455 KiB de terceros y ~227 KiB de JS sin
+   usar. Se muestra un marcador de posición ligero y el mapa real sólo se carga
+   cuando la persona lo pide. */
+.map-container {
+    margin-top: 1em;
+    width: 100%;
+    min-width: 300px;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.map-facade {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    width: 100%;
+    height: 250px;
+    padding: 1rem;
+    background: var(--background-light);
+    border: 1px dashed var(--border-color);
+    border-radius: 12px;
+    color: var(--text-primary);
+    font-family: var(--font-secondary);
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.map-facade:hover,
+.map-facade:focus-visible {
+    background: var(--background-white);
+    border-color: var(--accent-color);
+}
+
+.map-facade-pin {
+    font-size: 2rem;
+    line-height: 1;
+}
+
+.map-facade-text {
+    font-weight: 600;
+    font-size: 1rem;
+}
+
+.map-facade-note {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+
+.map-container iframe {
+    display: block;
+    width: 100%;
+    height: 250px;
+    border: none;
 }

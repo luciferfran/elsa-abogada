@@ -2,14 +2,13 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <link rel="icon" type="image/jpeg" href="assets/logo.jpg">
+    <link rel="icon" type="image/jpeg" href="assets/logo-176.jpg">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Elsa Manzano Cubero - Abogada en Burela, Lugo</title>
     <meta name="description" content="Abogada especialista en Derecho Civil, Familia, Penal y Violencia de Género en Burela, Lugo. Consulta legal profesional.">
+    <link rel="preload" href="assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="assets/fonts/playfair-latin.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="stylesheet" href="styles.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 </head>
     <body>
     <main>
@@ -17,7 +16,9 @@
     <header class="header" id="header">
         <nav class="nav container" aria-label="Menú principal">
             <div class="nav-logo">
-                <img src="assets/logo.jpg" alt="Logo Elsa Manzano Cubero, Abogada en Burela" class="logo-img" width="500" height="500">
+                <picture>
+                    <source srcset="assets/logo-176.webp" type="image/webp">
+                    <img src="assets/logo-176.jpg" alt="Logo Elsa Manzano Cubero, Abogada en Burela" class="logo-img" width="176" height="176"></picture>
             </div>
             <div class="nav-menu" id="nav-menu">
                 <ul class="nav-list">
@@ -181,8 +182,12 @@
                             <p>Avenida Arcadio Pardiñas 137<br>
                                Entreplanta, Local 6<br>
                                27880 Burela, Lugo</p>
-                            <div class="map-container" style="margin-top:1em; width:100%; border-radius:12px; overflow:hidden; min-width:300px;">
-                                <iframe title="Ubicación despacho Elsa Manzano Cubero" src="https://www.google.com/maps?q=Avenida+Arcadio+Pardiñas+137,+Burela,+Lugo&output=embed&z=16" style="width:100%; height:250px; border:none; display:block;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                            <div class="map-container" id="map-container" data-map-src="https://www.google.com/maps?q=Avenida+Arcadio+Pardiñas+137,+Burela,+Lugo&output=embed&z=16">
+                                <button type="button" class="map-facade" id="map-facade">
+                                    <span class="map-facade-pin" aria-hidden="true">🗺️</span>
+                                    <span class="map-facade-text">Ver mapa de la ubicación</span>
+                                    <span class="map-facade-note">Se cargará Google Maps al pulsar</span>
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -243,7 +248,9 @@
         <div class="container">
             <div class="footer-content">
                 <div class="footer-logo">
-                    <img src="assets/logo.jpg" alt="Logo Elsa Manzano Cubero" class="logo-img" width="500" height="500" loading="lazy">
+                    <picture>
+                        <source srcset="assets/logo-176.webp" type="image/webp">
+                        <img src="assets/logo-176.jpg" alt="Logo Elsa Manzano Cubero" class="logo-img" width="176" height="176" loading="lazy"></picture>
                 </div>
                 <div class="footer-info">
                     <p>&copy; 2024 Elsa Manzano Cubero - Abogada. Todos los derechos reservados.</p>

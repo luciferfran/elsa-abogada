@@ -70,6 +70,12 @@ function updateActiveNavLink(targetId) {
     });
 }
 
+// ¿El elemento ocupa parte del viewport ahora mismo?
+function isInViewport(element) {
+    const rect = element.getBoundingClientRect();
+    return rect.top < window.innerHeight && rect.bottom > 0;
+}
+
 // Intersection Observer for section animations and active nav
 function observeSections() {
     const sections = document.querySelectorAll('section');
@@ -77,20 +83,27 @@ function observeSections() {
         threshold: 0.3,
         rootMargin: `-${header.offsetHeight}px 0px 0px 0px`
     };
-    
+
+    // El contenido visible al cargar no se anima: el navegador acaba de
+    // pintarlo y fadeInUp lo devolvería a opacity 0, provocando un parpadeo
+    // y retrasando el Speed Index. Se sigue observando para el menú activo.
+    const visiblesAlCargar = new Set([...sections].filter(isInViewport));
+
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 // Add animation class
-                entry.target.classList.add('fade-in-up');
-                
+                if (!visiblesAlCargar.has(entry.target)) {
+                    entry.target.classList.add('fade-in-up');
+                }
+
                 // Update active nav link
                 const sectionId = `#${entry.target.id}`;
                 updateActiveNavLink(sectionId);
             }
         });
     }, observerOptions);
-    
+
     sections.forEach(section => {
         observer.observe(section);
     });
@@ -243,6 +256,9 @@ function animateOnScroll() {
     });
     
     animatedElements.forEach(element => {
+        // Igual que en observeSections: lo que ya se ve al cargar se deja tal
+        // cual, así se pinta una sola vez y no parpadea.
+        if (isInViewport(element)) return;
         observer.observe(element);
     });
 }
